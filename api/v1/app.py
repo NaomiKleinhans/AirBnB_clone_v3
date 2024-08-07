@@ -1,18 +1,16 @@
-#!/usr/bin/python3
-""" Flask Application """
+# api/v1/app.py
 import os
 from flask import Flask
 from models import storage
-# from api.v1.views import app_views
+from api.v1.views import app_views
 
 
 def create_app():
     """Create and configure the Flask application."""
     app = Flask(__name__)
-    app.config.from_object('config')
+    app.config.from_object('config')  # Ensure 'config' is available
 
-    # Register the blueprint after the app configuration
-    app.register_blueprint(app_views)
+    app.register_blueprint(app_views)  # Register the blueprint
 
     @app.teardown_appcontext
     def teardown(exception):
