@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Flask Application """
-from os import getenv
+from os import environ
 import os
 from flask import Flask
 from models import storage
@@ -10,8 +10,10 @@ from api.v1.views import app_views
 def create_app():
     """Create and configure the Flask application."""
     app = Flask(__name__)
-    app.register_blueprint(app_views)
     app.config.from_object('config')
+
+    # Register blueprint here
+    app.register_blueprint(app_views)
 
     @app.teardown_appcontext
     def teardown(exception):
