@@ -130,12 +130,24 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test count method"""
         storage = FileStorage()
-        count_before = storage.count()
+        storage.reload()
+        
+        # Initial counts
+        initial_count_all = storage.count()
+        initial_count_state = storage.count(State)
+        initial_count_city = storage.count(City)
+        
+        # Create new State instance
         new_state = State(name="New Mexico")
         storage.new(new_state)
         storage.save()
-        count_after = storage.count()
-        self.assertEqual(count_after, count_before + 1)
-        self.assertEqual(storage.count(State), 1)
-        # Assuming no cities are added
-        self.assertEqual(storage.count(City), 0)
+        
+        # Count after adding a new State
+        self.assertEqual(storage.count(), initial_count_all + 1)
+        self.assertEqual(storage.count(State), initial_count_state + 1)
+        
+        # Ensure no new City instances are added
+        self.assertEqual(storage.count(City), initial_count_city)
+
+if __name__ == "__main__":
+    unittest.main()
