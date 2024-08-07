@@ -98,6 +98,7 @@ class TestBaseModel(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+    
     def test_uuid(self):
         """Test that id is a valid uuid"""
         inst1 = BaseModel()
