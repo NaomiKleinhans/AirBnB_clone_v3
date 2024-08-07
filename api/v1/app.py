@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """ Flask Application """
-from os import environ
 import os
 from flask import Flask
 from models import storage
-# from api.v1.views import app_views
+from api.v1.views import app_views
 
 
 def create_app():
@@ -12,7 +11,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('config')
 
-    # Register blueprint here
+    # Register the blueprint after the app configuration
     app.register_blueprint(app_views)
 
     @app.teardown_appcontext
