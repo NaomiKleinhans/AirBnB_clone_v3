@@ -32,12 +32,14 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
-            if kwargs.get("created_at", None) and isinstance(self.created_at, str):
+            created_at_value = kwargs.get("created_at", None)
+            if created_at_value and isinstance(self.created_at, str):
                 self.created_at = datetime.strptime(
                     kwargs["created_at"], time).replace(tzinfo=timezone.utc)
             else:
                 self.created_at = datetime.now(timezone.utc)
-            if kwargs.get("updated_at", None) and isinstance(self.updated_at, str):
+            updated_at_value = kwargs.get("updated_at", None)
+            if updated_at_value and isinstance(self.updated_at, str):
                 self.updated_at = datetime.strptime(
                     kwargs["updated_at"], time).replace(tzinfo=timezone.utc)
             else:
