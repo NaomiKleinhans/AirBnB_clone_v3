@@ -80,7 +80,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(inst.number, 89)
 
     def test_datetime_attributes(self):
-        """Test that two BaseModel instances have different 
+        """Test that two BaseModel instances have different
         datetime objects and that upon creation have
         identical updated_at and created_at values."""
         tic = datetime.now()
@@ -99,7 +99,7 @@ class TestBaseModel(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
- 
+
     def test_uuid(self):
         """Test that id is a valid uuid"""
         inst1 = BaseModel()
