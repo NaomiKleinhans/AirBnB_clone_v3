@@ -3,7 +3,7 @@
 import os
 from flask import Flask
 from models import storage
-from api.v1.views import app_views
+# from api.v1.views import app_views
 
 
 def create_app():
