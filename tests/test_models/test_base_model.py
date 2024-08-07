@@ -82,24 +82,17 @@ class TestBaseModel(unittest.TestCase):
     def test_datetime_attributes(self):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at values."""
-        # Create first instance and check created_at and updated_at
         tic = datetime.now()
         inst1 = BaseModel()
         toc = datetime.now()
         self.assertTrue(tic <= inst1.created_at <= toc)
         self.assertEqual(inst1.created_at, inst1.updated_at)
-        
-        # Sleep to ensure a different timestamp for the next instance
-        time.sleep(0.1)  # 100 milliseconds
-        
-        # Create second instance and check created_at and updated_at
+        time.sleep(0.1)
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
         self.assertTrue(tic <= inst2.created_at <= toc)
         self.assertEqual(inst2.created_at, inst2.updated_at)
-        
-        # Check that created_at and updated_at are different between instances
         self.assertNotEqual(inst1.created_at, inst2.created_at)
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
 
@@ -112,6 +105,7 @@ if __name__ == "__main__":
         for inst in [inst1, inst2]:
             uuid = inst.id
             with self.subTest(uuid=uuid):
+
                 self.assertIs(type(uuid), str)
                 self.assertRegex(uuid,
                                  '^[0-9a-f]{8}-[0-9a-f]{4}'
