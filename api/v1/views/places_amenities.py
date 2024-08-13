@@ -9,7 +9,7 @@ deleting an amenity from a place, and adding an amenity to a place.
 from flask import abort, jsonify, request
 from models import storage
 from models.engine.db_storage import classes
-
+from api.v1.views import app_views
 
 @app_views.route("/places/<place_id>/amenities", strict_slashes=False, methods=["GET"])
 def get_amenities_place(place_id):
