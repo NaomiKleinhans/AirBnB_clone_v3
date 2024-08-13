@@ -37,5 +37,13 @@ def not_found(error):
     return jsonify({"error": "Not found"}), 404
 
 
+@app.route('/print-routes')
+def print_routes():
+    routes = []
+    for rule in app.url_map.iter_rules():
+        routes.append(f"{rule.endpoint}: {rule}")
+    return jsonify(routes)
+
 if __name__ == "__main__":
-    app.run(host=api_host, port=int(api_port), threaded=True)
+   app.run(host=getenv("HBNB_API_HOST", "0.0.0.0"), port=int(
+       getenv("HBNB_API_PORT", 5000)), threaded=True)

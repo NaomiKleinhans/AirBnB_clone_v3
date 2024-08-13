@@ -17,13 +17,13 @@ from models import storage
 from models.engine.db_storage import classes
 
 
-@app_views.route("/status")
+@app_views.route("/status",  methods=['GET'])
 def check_status():
     """Returns the status of the API."""
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats")
+@app_views.route("/stats",  methods=['GET'])
 def num_objs():
     """Retrieves the number of each objects by type."""
     objects = {
