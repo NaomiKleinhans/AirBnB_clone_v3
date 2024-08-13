@@ -1,41 +1,37 @@
 #!/usr/bin/python3
-"""Routes Handling for the App.
-
-This module contains route handlers for the Flask app.
-It defines the various routes and their corresponding functions
-to handle incoming HTTP requests.
-Each route is responsible for a specific endpoint or functionality of the app.
-
-Routes:
-- GET /status: Returns the status of the API.
-- GET /stats: Retrieves the number of each object by type.
 """
-
+Flask route that returns json status response
+"""
 from api.v1.views import app_views
-from flask import Response, jsonify
+from flask import jsonify, request
 from models import storage
-from models.engine.db_storage import classes
 
 
-@app_views.route("/status")
-def check_status():
-    """Returns the status of the API."""
-    return jsonify({"status": "OK"})
-
-
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status', methods=['GET'])
 def status():
-    return jsonify({"status": "OK"})
+    """
+    function for status route that returns the status
+    """
+    if request.method == 'GET':
+        resp = {"status": "OK"}
+        return jsonify(resp)
 
-@app_views.route("/stats")
-def num_objs():
-    """Retrieves the number of each objects by type."""
-    objects = {
-        "amenities": storage.count(classes["Amenity"]),
-        "cities": storage.count(classes["City"]),
-        "places": storage.count(classes["Place"]),
-        "reviews": storage.count(classes["Review"]),
-        "states": storage.count(classes["State"]),
-        "users": storage.count(classes["User"]),
-    }
-    return jsonify(objects)
+
+@app_views.route('/stats', methods=['GET'])
+def stats():
+    """
+    function to return the count of all class objects
+    """
+    if request.method == 'GET':
+        response = {}
+        PLURALS = {
+            "Amenity": "amenities",
+            "City": "cities",
+            "Place": "places",
+            "Review": "reviews",
+            "State": "states",
+            "User": "users"
+        }
+        for key, value in PLURALS.items():
+            response[value] = storage.count(key)
+        return jsonify(response)
