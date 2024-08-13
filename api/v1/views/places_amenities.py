@@ -45,19 +45,8 @@ def get_amenities_place(place_id):
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  strict_slashes=False, methods=["DELETE"])
 def delete_amenity_place(place_id, amenity_id):
-    """Delete an amenity from a place.
-
-    Args:
-        place_id (str): The ID of the place.
-        amenity_id (str): The ID of the amenity.
-
-    Returns:
-        An empty JSON response.
-
-    Raises:
-        404: If the place or amenity with the specified IDs do not exist,
-             or if the amenity is not associated with the place.
-    """
+    """Delete an amenity from a place without deleting the amenity
+    globally."""
     place = storage.get(classes["Place"], place_id)
     if place is None:
         abort(404)
@@ -65,30 +54,19 @@ def delete_amenity_place(place_id, amenity_id):
     amenity = storage.get(classes["Amenity"], amenity_id)
     if amenity is None:
         abort(404)
+
     if amenity not in place.amenities:
         abort(404)
 
-    storage.delete(amenity)
+    place.amenities.remove(amenity)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  strict_slashes=False, methods=["POST"])
 def post_amenity_place(place_id, amenity_id):
-    """Add an amenity to a place.
-
-    Args:
-        place_id (str): The ID of the place.
-        amenity_id (str): The ID of the amenity.
-
-    Returns:
-        A JSON response containing the details of the added amenity.
-
-    Raises:
-        404: If the place or amenity with the specified IDs do not exist.
-        201: If the amenity is successfully added to the place.
-    """
+    """Add an amenity to a place."""
     place = storage.get(classes["Place"], place_id)
     if place is None:
         abort(404)
@@ -97,6 +75,9 @@ def post_amenity_place(place_id, amenity_id):
     if amenity is None:
         abort(404)
 
-    if amenity in place.amenities:
-        return jsonify(amenity.to_dict())
-    return jsonify(amenity.to_dict()), 201
+    if amenity not in place.amenities:
+        place.amenities.append(amenity)
+        storage.save()
+        return jsonify(amenity.to_dict()), 201
+
+    return jsonify(amenity.to_dict()), 200
