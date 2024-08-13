@@ -14,7 +14,6 @@ Routes:
 - PUT /amenities/<amenity_id>: Update an existing amenity.
 """
 
-from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
 from models.engine.db_storage import classes

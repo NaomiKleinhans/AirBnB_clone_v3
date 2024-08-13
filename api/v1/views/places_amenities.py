@@ -14,7 +14,7 @@ from api.v1.views import app_views
 @app_views.route("/places/<place_id>/amenities", strict_slashes=False, methods=["GET"])
 def get_amenities_place(place_id):
     """Get all amenities for a place."""
-    from api.v1.views import app_views  # Moved import here
+    # from api.v1.views import app_view
     place = storage.get(classes["Place"], place_id)
     if place is None:
         abort(404)
@@ -27,7 +27,7 @@ def get_amenities_place(place_id):
                  strict_slashes=False, methods=["DELETE"])
 def delete_amenity_place(place_id, amenity_id):
     """Delete an amenity from a place."""
-    from api.v1.views import app_views  # Moved import here
+    # from api.v1.views import app_views
     place = storage.get(classes["Place"], place_id)
     if place is None:
         abort(404)
@@ -47,7 +47,7 @@ def delete_amenity_place(place_id, amenity_id):
                  strict_slashes=False, methods=["POST"])
 def post_amenity_place(place_id, amenity_id):
     """Add an amenity to a place."""
-    from api.v1.views import app_views  # Moved import here
+    # from api.v1.views import app_views
     place = storage.get(classes["Place"], place_id)
     if place is None:
         abort(404)
