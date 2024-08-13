@@ -23,6 +23,10 @@ def check_status():
     return jsonify({"status": "OK"})
 
 
+@app_views.route('/status', strict_slashes=False)
+def status():
+    return jsonify({"status": "OK"})
+
 @app_views.route("/stats")
 def num_objs():
     """Retrieves the number of each objects by type."""
