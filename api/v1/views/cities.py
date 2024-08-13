@@ -149,8 +149,3 @@ def put_city(city_id):
 
     storage.save()
     return jsonify(city.to_dict())
-
-
-@app_views.route('/status', strict_slashes=False)
-def status():
-    return jsonify({"status": "OK"})
