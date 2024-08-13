@@ -25,6 +25,10 @@ api_host = getenv("HBNB_API_HOST", "0.0.0.0")
 api_port = getenv("HBNB_API_PORT", 5000)
 
 
+@app_views.route('/status', strict_slashes=False)
+def status():
+    return jsonify({"status": "OK"})
+
 @app.teardown_appcontext
 def teardown(self):
     """Closes the database storage connection."""
